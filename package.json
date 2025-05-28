@@ -1,5 +1,4 @@
-{
-    "scripts": {
-      "build": "react-scripts build"
-    }
-  }
+"scripts": {
+  "build": "vite build"
+  // or "next build" or whatever applies
+}

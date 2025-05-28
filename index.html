@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4e54c8">
+    <meta name="description" content="A simple daily task tracker app to manage your todos">
+    <title>Daily Task Tracker</title>
+    
+    <!-- Resource hints for better performance -->
+    <link rel="preconnect" href="https://firebaseio.com">
+    <link rel="preconnect" href="https://firestore.googleapis.com">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.firebaseio.com https://*.googleapis.com; script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com;">
+    
+    <!-- PWA: App Icons -->
+    <link rel="icon" type="image/png" href="./img/favicon.png">
+    <link rel="apple-touch-icon" href="./img/icon-192x192.png">
+    
+    <!-- PWA: Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-auth-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-firestore-compat.min.js"></script>
+</head>
+<body>
+    <div class="offline-notification" id="offlineNotification">
+        You are currently offline. Changes will be saved when you reconnect.
+    </div>
+
+    <!-- Authentication Screens -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-card">
+            <h2>Daily Task Tracker</h2>
+            <p class="auth-subtitle">Sign in to access your tasks</p>
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button id="loginButton" class="auth-button">Sign In</button>
+                <div class="auth-error" id="loginError"></div>
+                <p class="auth-toggle">Don't have an account? <a href="#" id="showSignupBtn">Sign up</a></p>
+            </div>
+            
+            <!-- Signup Form -->
+            <div id="signupForm" class="auth-form hidden">
+                <input type="text" id="signupName" placeholder="Name" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Password (min 6 characters)" required>
+                <button id="signupButton" class="auth-button">Create Account</button>
+                <div class="auth-error" id="signupError"></div>
+                <p class="auth-toggle">Already have an account? <a href="#" id="showLoginBtn">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div class="app-container hidden" id="appContainer">
+        <header>
+            <h1>Daily Task Tracker</h1>
+            <div class="header-controls">
+                <div class="date-display" id="currentDate"></div>
+                <div class="user-profile">
+                    <span id="userName"></span>
+                    <button id="logoutBtn" class="logout-button">Sign Out</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="task-form">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button id="addTaskBtn">Add</button>
+        </div>
+        
+        <ul class="task-list" id="taskList">
+            <!-- Tasks will be added here dynamically -->
+        </ul>
+        
+        <div id="emptyState" class="no-tasks">
+            You have no tasks yet. Add one above!
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalTasks">0</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="completedTasks">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="remainingTasks">0</div>
+                <div class="stat-label">Remaining</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="update-toast" id="updateToast">
+        New version available!
+        <button id="updateBtn">Update Now</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="./js/firebase-config.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
